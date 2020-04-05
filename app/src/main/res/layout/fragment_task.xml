@@ -1,0 +1,103 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_marginTop="-20dp"
+    android:layout_height="50dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_faveriot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        card_view:cardCornerRadius="19dp"
+        card_view:cardElevation="6dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toStartOf="@+id/cardView_calender"
+        card_view:layout_constraintStart_toEndOf="@+id/cardView_calender"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:src="@drawable/ic_favorite_gray" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_calender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:elevation="1dp"
+        card_view:cardCornerRadius="19dp"
+        card_view:cardElevation="6dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toStartOf="@+id/cardView_time"
+        card_view:layout_constraintStart_toEndOf="@+id/cardView_faveriot"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:src="@drawable/calender"
+            card_view:layout_constraintStart_toEndOf="@+id/cardView_faveriot"
+            tools:layout_editor_absoluteY="6dp" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:elevation="1dp"
+        card_view:cardCornerRadius="19dp"
+        card_view:cardElevation="6dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toStartOf="@+id/cardView_true"
+        card_view:layout_constraintStart_toEndOf="@+id/cardView_calender"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:src="@drawable/calender"
+            tools:layout_editor_absoluteY="6dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:elevation="1dp"
+        card_view:cardCornerRadius="19dp"
+        card_view:cardElevation="6dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintStart_toEndOf="@+id/cardView_time"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:src="@drawable/calender"
+            card_view:layout_constraintStart_toEndOf="@+id/cardView_faveriot"
+            tools:layout_editor_absoluteY="6dp" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
