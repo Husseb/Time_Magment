@@ -11,8 +11,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.bumptech.glide.Glide;
-import com.huseen.abo.aita1998.timemagment.adtional.YourPreference;
+ import com.huseen.abo.aita1998.timemagment.adtional.YourPreference;
 import com.huseen.abo.aita1998.timemagment.catagurey.CatagureyActivity;
 import com.huseen.abo.aita1998.timemagment.R;
 

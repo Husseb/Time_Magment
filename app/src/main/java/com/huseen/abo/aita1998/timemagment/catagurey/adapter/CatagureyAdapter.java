@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huseen.abo.aita1998.timemagment.R;
@@ -20,6 +22,8 @@ import com.huseen.abo.aita1998.timemagment.tasks.TaskActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CatagureyAdapter extends RecyclerView.Adapter<CatagureyAdapter.MyHolder> {
     Context context;
@@ -43,9 +47,14 @@ public class CatagureyAdapter extends RecyclerView.Adapter<CatagureyAdapter.MyHo
             final Project project = projectList.get(position);
 
 
-            int r = project.getProgress();
-            holder.progressBar.setProgress(r);
-            holder.textView.setText(project.getProgress() + " %");
+            try {
+                getPrgressBarValue(project ,holder);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             holder.nameProjectTv.setText(project.getName());
             holder.describtionProjectTv.setText(project.getDetails());
 
@@ -60,22 +69,26 @@ public class CatagureyAdapter extends RecyclerView.Adapter<CatagureyAdapter.MyHo
         }
     }
 
-    public void getPrgressBarValue(Project project) {
-        taskViewModel.getAllTask().observe(catagureyActivity, tasks -> {
+    public void getPrgressBarValue(Project project ,MyHolder holder) throws ExecutionException, InterruptedException {
+        AtomicInteger all  = new AtomicInteger();
+        taskViewModel.getAllTask().observe((LifecycleOwner) context, tasks -> {
+            taskList.clear();
             for (int i = 0; i < tasks.size(); i++) {
                 final Task task = tasks.get(i);
-
-                if (task.getId() == project.getId()) {
+                if (task.getNumber() == project.getId()) {
                     taskList.add(task);
                 }
-
             }
+            int count = 0;
             for (int i = 0; i < taskList.size(); i++) {
-
-
+                count += taskList.get(i).getSelect();
             }
+            double fff = taskList.size();
+            double ff = count / fff * 100;
+               holder.progressBar.setProgress((int)ff);
+            holder.textView.setText((int)ff + " %");
         });
-    }
+     }
 
     @Override
     public int getItemCount() {

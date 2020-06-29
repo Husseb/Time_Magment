@@ -29,6 +29,25 @@ public class TaskRepository {
         new UpdateTaskAsyncTask(taskDao).execute(task);
     }
 
+    public void updatCount(Task  task) {
+        new updateTaskAsyncTask(taskDao).execute(task);
+    }
+
+    private static class updateTaskAsyncTask extends AsyncTask<Task, Integer, Integer> {
+        private TaskDao taskDao;
+
+
+        private updateTaskAsyncTask(TaskDao taskDao  ) {
+            this.taskDao = taskDao;
+        }
+
+        @Override
+        protected Integer doInBackground(Task... tasks) {
+
+            taskDao.updateSelect(tasks[0].getId(), tasks[0].getSelect());
+             return 0;
+        }
+    }
 
     public void delete(Task task) {
         new DeleteTaskAsyncTask(taskDao).execute(task);

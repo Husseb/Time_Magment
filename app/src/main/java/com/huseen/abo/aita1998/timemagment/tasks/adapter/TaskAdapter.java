@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.huseen.abo.aita1998.timemagment.R;
 import com.huseen.abo.aita1998.timemagment.roomDb.task.Task;
 import com.huseen.abo.aita1998.timemagment.roomDb.task.TaskViewModel;
-import com.huseen.abo.aita1998.timemagment.taskDetailes.TaskDetailes;
-import com.huseen.abo.aita1998.timemagment.tasks.TaskActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -26,6 +25,7 @@ import java.util.Locale;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyHolder> {
     Context context;
     private List<Task> taskList;
+    private TaskViewModel taskViewModel;
 
     @NonNull
     @Override
@@ -51,23 +51,33 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyHolder> {
         holder.textView.setText(day + "/" + month + "/" + year);
 
         holder.describtionProjectTv.setText(task.getDetails());
+
         holder.nameProjectTv.setText(task.getName());
-        holder.selectGray.setOnLongClickListener(new View.OnLongClickListener() {
+        if (task.getSelect() == 1) {
+            holder.selectGray.setVisibility(View.GONE);
+            holder.selectBlueIv.setVisibility(View.VISIBLE);
+        } else {
+            holder.selectGray.setVisibility(View.VISIBLE);
+            holder.selectBlueIv.setVisibility(View.GONE);
+        }
+
+        holder.selectGray.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 task.setSelect(1);
+                taskViewModel.update(task);
                 holder.selectGray.setVisibility(View.GONE);
                 holder.selectBlueIv.setVisibility(View.VISIBLE);
-                return false;
+
             }
         });
-        holder.selectBlueIv.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.selectBlueIv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 task.setSelect(0);
-                holder.selectBlueIv.setVisibility(View.GONE);
+                taskViewModel.update(task);
+                 holder.selectBlueIv.setVisibility(View.GONE);
                 holder.selectGray.setVisibility(View.VISIBLE);
-                return false;
             }
         });
     }
@@ -75,6 +85,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyHolder> {
     @Override
     public int getItemCount() {
         return taskList.size();
+    }
+
+    public void setTaskList(TaskViewModel taskViewModel) {
+        this.taskViewModel = taskViewModel;
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
@@ -94,7 +108,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyHolder> {
         }
     }
 
-    public void setList(List<Task> taskList ) {
+    public void setList(List<Task> taskList) {
         this.taskList = taskList;
-     }
+    }
 }

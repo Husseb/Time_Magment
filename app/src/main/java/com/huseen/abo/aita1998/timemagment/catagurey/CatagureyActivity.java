@@ -13,6 +13,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,18 +36,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huseen.abo.aita1998.timemagment.R;
 import com.huseen.abo.aita1998.timemagment.adtional.YourPreference;
 import com.huseen.abo.aita1998.timemagment.catagurey.adapter.CatagureyAdapter;
-import com.huseen.abo.aita1998.timemagment.dashboard.home.HomeFragment;
 import com.huseen.abo.aita1998.timemagment.roomDb.project.Project;
 import com.huseen.abo.aita1998.timemagment.roomDb.project.ProjectViewModel;
 import com.huseen.abo.aita1998.timemagment.roomDb.task.TaskViewModel;
 
+import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CatagureyActivity extends AppCompatActivity {
-    public static String TAG = HomeFragment.class.getSimpleName();
     private BottomSheetDialog bottomSheetDialog;
 
     private CatagureyAdapter catagureyAdapter;
@@ -71,6 +75,7 @@ public class CatagureyActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_catagurey);
+
         relativeLayout = findViewById(R.id.relativeLayout);
 
         setBackground();
@@ -82,7 +87,7 @@ public class CatagureyActivity extends AppCompatActivity {
         recyclerview.setLayoutManager(linearLayoutManager);
 
         projectList = new ArrayList<>();
-        Log.e(TAG, "onCreateView: " + projectList.size());
+        Log.e("TAG", "onCreateView: " + projectList.size());
         catagureyAdapter.setList(projectList, new TaskViewModel(getApplication()), CatagureyActivity.this);
 
         projectViewModel.getAllProject().observe(this, new Observer<List<Project>>() {
@@ -90,7 +95,7 @@ public class CatagureyActivity extends AppCompatActivity {
             public void onChanged(List<Project> projects) {
                 if (projects.size() > 0) {
                     projectList = projects;
-                    catagureyAdapter.setList(projectList,new TaskViewModel(getApplication()) ,CatagureyActivity.this);
+                    catagureyAdapter.setList(projectList, new TaskViewModel(getApplication()), CatagureyActivity.this);
                 }
             }
         });
@@ -143,7 +148,6 @@ public class CatagureyActivity extends AppCompatActivity {
                     if (TextUtils.isEmpty(titleString) && titleString.length() >= 3) {
                         titleEt.setError("Title least than 3 Character ");
                         titleEt.setFocusable(true);
-//                        Toast.makeText(this, "The Title Must by more 3 Character", Toast.LENGTH_SHORT).show();
                     } else if (TextUtils.isEmpty(descriptionString)) {
                         descriptionEt.setError("Description is Empty");
                         descriptionEt.setFocusable(true);
@@ -180,7 +184,6 @@ public class CatagureyActivity extends AppCompatActivity {
                 }
             }
         });
-
         builder.create().show();
     }
 
@@ -196,15 +199,12 @@ public class CatagureyActivity extends AppCompatActivity {
 
 
     private void pickFromGallary() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_PICK_GALLARY_REQUEST_CODE);
+
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLARY_REQUEST_CODE);
+
     }
 
     @Override
@@ -223,7 +223,6 @@ public class CatagureyActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
-
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_PICK_GALLARY_REQUEST_CODE) {
                 YourPreference yourPreference = YourPreference.getInstance(getApplicationContext());
@@ -232,7 +231,6 @@ public class CatagureyActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
 
         }
-
     }
 
     private void setBackground() {
@@ -253,4 +251,5 @@ public class CatagureyActivity extends AppCompatActivity {
         }
 
     }
+
 }

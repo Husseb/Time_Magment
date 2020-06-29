@@ -14,6 +14,10 @@ public interface TaskDao {
     @Insert
      void insert(Task task);
 
+
+    @Query("UPDATE task_table SET `select` = :select WHERE  id= :id")
+    void updateSelect(int id ,int select);
+
     @Update
     void update(Task task);
 

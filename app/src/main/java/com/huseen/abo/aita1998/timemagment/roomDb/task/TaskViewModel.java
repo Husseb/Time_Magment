@@ -25,6 +25,9 @@ public class TaskViewModel extends AndroidViewModel {
     public void update(Task task) {
         productRepository.updat(task);
     }
+    public void updateSelect(Task task) {
+        productRepository.updatCount(task);
+    }
 
     public void delete(Task task) {
         productRepository.delete(task);
